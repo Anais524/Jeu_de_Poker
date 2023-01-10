@@ -24,10 +24,10 @@ def donner_gagnant(liste_joueurs_alive, pot):
     return gagnants
 
 
-#On réorganise la liste des joueurs de façon à ce que le dealer soit toujours à la fin, pour faciliter l'ordre de mise
+#On réorganise la liste des joueurs de façon à ce que le dealer soit au début
 def nouvel_ordre_liste(liste, dealer):
-    nouvelle_liste = liste[liste.index(dealer)+1:]
-    L = liste[:liste.index(dealer)+1] + [dealer]
+    nouvelle_liste = liste[liste.index(dealer):]
+    L = liste[:liste.index(dealer)]
     return nouvelle_liste + L
 
 
