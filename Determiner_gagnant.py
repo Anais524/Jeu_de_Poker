@@ -155,32 +155,32 @@ class Gagnant:
         #FULL: s'il y a des éléments dans triple_liste et double_liste, cela veut dire que la main possède deux cartes identiques et trois cartes identiques, il y a donc full.
         if (len(triple_list) > 0) and (len(paire_list) > 0):
             new_list = triple_list + paire_list
-            resultat = Resultat(Gagnant.Full[0], Gagnant.Full[1], new_list[0].valeur, new_list[0].couleur, new_list)
+            resultat = Resultat(Gagnant.Full[0], Gagnant.Full[1], new_list[0].valeur, new_list)
             return resultat
 
         #BRELAN: si la main contient 3 éléments identiques, mais ne possède pas de paire, il y a brelan.
         if (len(triple_list) > 0) and (len(paire_list) == 0):
             new_list = triple_list + [Gagnant.plus_haute_carte(cartes)] + [sorted(cartes, key = lambda x : x.valeur, reverse=True)[1]]
-            resultat = Resultat(Gagnant.Brelan[0], Gagnant.Brelan[1], new_list[0].valeur, new_list[0].couleur, new_list, Gagnant.GetKicker(triple_list, cartes, 2))
+            resultat = Resultat(Gagnant.Brelan[0], Gagnant.Brelan[1], new_list[0].valeur, new_list, Gagnant.GetKicker(triple_list, cartes, 2))
             return resultat
 
         #DOUBLE PAIRE: Si la liste paire_list contien deux éléments, mais la liste triple_list est vide, la main possède deux paires.
         if (len(triple_list) == 0) and (len(paire_list) == 4):
             sorted_paire_list = sorted(paire_list, key=lambda x: x.valeur, reverse=True)
             new_list= sorted_paire_list + [(Gagnant.plus_haute_carte(cartes))]
-            resultat = Resultat(Gagnant.Double_paire[0], Gagnant.Double_paire[1], new_list[0].valeur, new_list[0].couleur, new_list, Gagnant.GetKicker(paire_list, cartes, 1))
+            resultat = Resultat(Gagnant.Double_paire[0], Gagnant.Double_paire[1], new_list[0].valeur, new_list, Gagnant.GetKicker(paire_list, cartes, 1))
             return resultat
 
         #PAIRE SIMPLE: Si seul la liste paire_list contient deux éléments, il y a uniquement une paire.
         if (len(triple_list) == 0) and (len(paire_list) == 2):
             new_list = paire_list + [Gagnant.plus_haute_carte(cartes)] + [sorted(cartes, key = lambda x : x.valeur, reverse=True)[1]] + [sorted(cartes, key = lambda x : x.valeur, reverse=True)[2]]
-            resultat = Resultat(Gagnant.Paire[0], Gagnant.Paire[1], new_list[0].valeur, new_list[0].couleur, new_list, Gagnant.GetKicker(paire_list, cartes, 3))
+            resultat = Resultat(Gagnant.Paire[0], Gagnant.Paire[1], new_list[0].valeur, new_list, Gagnant.GetKicker(paire_list, cartes, 3))
             return resultat
 
         #PLUS HAUTE CARTE: si aucune condition précédente n'est vérifiée, la main de possède pas de caractéristique spécifique et la meilleure main est alors celle contentant les cartes ayant les plus hautes valeurs.
         else:
             sorted_list = sorted(cartes, key=lambda x: x.valeur)
-            resultat = Resultat(Gagnant.Carte_haute[0], Gagnant.Carte_haute[1], sorted_list[0].valeur, sorted_list[0].couleur, sorted_list, Gagnant.GetKicker([Gagnant.plus_haute_carte(cartes)], cartes, 4))
+            resultat = Resultat(Gagnant.Carte_haute[0], Gagnant.Carte_haute[1], sorted_list[0].valeur, sorted_list, Gagnant.GetKicker([Gagnant.plus_haute_carte(cartes)], cartes, 4))
             return resultat
 
 
