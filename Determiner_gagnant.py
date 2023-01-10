@@ -64,26 +64,35 @@ class Gagnant:
         else:
             return None
 
-    #Méthode qui permet de détecter s'il y a une suite. Si la main possède efectivement une suite, la fonction renvoie les 5 plus hautes cartes de la suite.
+    #Méthode qui permet de détecter s'il y a une suite. Si la main possède effectivement une suite, la fonction renvoie les 5 plus hautes cartes de la suite.
     @staticmethod
     def suite(liste):
-        sorted_list = sorted(liste, key=lambda x: x.valeur, reverse=True)
-        suite_liste = []
-        for i in range(len(sorted_list) - 1):
-            if sorted_list[i].valeur == sorted_list[i + 1].valeur + 1:
-                suite_liste.append(sorted_list[i])
-                suite_liste.append(sorted_list[i + 1])
-        unique_list = []
-        for carte in suite_liste:
-            if carte not in unique_list:
-                unique_list.append(carte)
-        cmpt = 0
-        for i in range(len(unique_list) - 1):
-            if (unique_list[i].valeur == unique_list[i + 1].valeur + 1):
-                cmpt += 1
-        if len(unique_list) >= 5 and cmpt >= 4:
-            unique_list = sorted(unique_list[-5:], key=lambda x: x.valeur)
-            return unique_list
+    sorted_list = sorted(liste, key=lambda x: x.valeur, reverse=True)
+    suite_liste = []
+    if sorted_list[0].valeur == 14 and sorted_list[-1].valeur == 2:
+        suite_liste.append(sorted_list[0])
+    for i in range(len(sorted_list) - 1):
+        if sorted_list[i].valeur == sorted_list[i + 1].valeur + 1:
+            suite_liste.append(sorted_list[i])
+            suite_liste.append(sorted_list[i + 1])
+    unique_list = []
+    unique_list_valeur= []
+    for carte in suite_liste:
+        if carte.valeur not in unique_list_valeur:
+            unique_list.append(carte)
+            unique_list_valeur.append(carte.valeur)
+    unique_list = sorted(unique_list, key=lambda x: x.valeur, reverse=True)
+    cmpt = 0
+    for i in range(len(unique_list) - 1):
+        if (unique_list[i].valeur == unique_list[i + 1].valeur + 1):
+            cmpt += 1
+        else:
+            cmpt = 0
+    if len(unique_list) >= 5 and cmpt >= 4:
+        unique_list = sorted(unique_list[-5:], key=lambda x: x.valeur)
+        return unique_list
+    elif unique_list[0].valeur == 14 and unique_list[-1].valeur == 2 and (unique_list[i].valeur == unique_list[i + 1] + 1 for i in range(-1, -5, -1)):
+        return [unique_list[0]] + unique_list[-1:-5:-1]
 
     # Méthode qui permet de détecter s'il y a des cartes de même valeur. Elle renvoie un dictionnaire dont la clef est la valeur d'une carte, et la valeur associée les cartes ayant cette valeur.
     @staticmethod
